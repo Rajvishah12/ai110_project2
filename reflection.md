@@ -8,13 +8,13 @@ Step 1: 3 core actions
 - add/edit tasks (owner should be able to add or edit tasks related to a specific pet)
 - display generated schedule (the app should calculate the optimal schedule -- optimized for highest priority tasks for a pet -- and display it to the user)
 
-As directed, I included the 3 classes Task, Pet, and Owner. The Owner class has attributes name (string), timeConstraint (float), and petList (a list of Pet objects). Time constraint is included so the schedule fits within the Owner's time constraint. petList is included to track pets. Pet has attributes name (string), lowPriorityTasks (list of low priority tasks), mediumPriorityTasks (list of medium priority tasks), highPriorityTasks(list of high priority tasks). It makes sense to organize the tasks by priority instead of assigning each task a priority attribute, since the goal is to select from high priority tasks first and go down the line. The Task Class has attributes name (string) and duration (float) for the name and duration of the task respectively.
+As directed, I included the 3 classes Task, Pet, and Owner. The Owner class has attributes ownerName (string), timeConstraint (float), and petList (a list of Pet objects). Time constraint is included so the schedule fits within the Owner's time constraint. petList is included to track pets. Pet has attributes petName (string), lowPriorityTasks (list of low priority tasks), mediumPriorityTasks (list of medium priority tasks), highPriorityTasks(list of high priority tasks). It makes sense to organize the tasks by priority, since the goal is to select from high priority tasks first and go down the line. The Task Class has attributes taskName (string) and duration (float) for the name and duration of the task respectively.
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
-- yes -- added priority attribute to task so it could be used to support the task into the appropriate list
+
 ---
 
 ## 2. Scheduling Logic and Tradeoffs

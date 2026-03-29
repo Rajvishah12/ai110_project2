@@ -1,18 +1,29 @@
 classDiagram
-    class Owner {
-        - string name
-        - float timeConstraint
-        - List~Pet~ petList
+    class Task {
+        +str taskName
+        +int priority
+        +float duration
+        +str description
+        +str frequency
+        +bool completed
+        +mark_complete()
     }
     class Pet {
-        - string name
-        - List~Task~ lowPriorityTasks
-        - List~Task~ mediumPriorityTasks
-        - List~Task~ highPriorityTasks
+        +str petName
+        +list taskList
+        +add_task(task)
+        +remove_task(task)
     }
-    class Task {
-        - string name
-        - float duration
+    class Owner {
+        +str ownerName
+        +float timeConstraint
+        +list petList
+        +add_pet(pet)
+        +remove_pet(pet)
     }
-    Owner "1" o-- "*" Pet : has
-    Pet "1" o-- "*" Task : contains
+    class Scheduler {
+        +get_all_tasks(owner)
+        +schedule_for_owner(owner)
+    }
+    Owner "1" o-- "*" Pet : owns
+    Pet "1" o-- "*" Task : has

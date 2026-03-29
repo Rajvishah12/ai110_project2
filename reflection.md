@@ -13,10 +13,11 @@ As directed, I included the 3 classes Task, Pet, and Owner. The Owner class has 
 **b. Design changes**
 
 - Did your design change during implementation?
-No
+Yes
 - If yes, describe at least one change and why you made it.
 Though my design did not change, Copilot did recommend changing the way tasklists were initialized. It also recommended changing the task priorities to be strings since the 3 task lists are categorical. However, since I write the logic, I will ensure only 1, 2, and 3 are options.
 
+Also, I forgot to include methods in my original UML diagram so I added them as I went.
 ---
 
 ## 2. Scheduling Logic and Tradeoffs

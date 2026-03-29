@@ -12,12 +12,12 @@ def main():
     ownerMiles.add_pet(petBiscuit)
 
     # Task Creation
-    task1 = Task(taskName="Feed Teddy", priority=1, duration=0.5)
-    task2 = Task(taskName="Walk Teddy", priority=2, duration=1)
-    task3 = Task(taskName="Wash Teddy", priority=3, duration=3)
-    task4 = Task(taskName="Feed Biscuit", priority=1, duration=0.5)
-    task5 = Task(taskName="Walk Biscuit", priority=2, duration=1)
-    task6 = Task(taskName="Wash Biscuit", priority=3, duration=2)
+    task1 = Task(taskName="Feed Teddy", priority=1, duration=30)
+    task2 = Task(taskName="Walk Teddy", priority=2, duration=60)
+    task3 = Task(taskName="Wash Teddy", priority=3, duration=180)
+    task4 = Task(taskName="Feed Biscuit", priority=1, duration=30)
+    task5 = Task(taskName="Walk Biscuit", priority=2, duration=60)
+    task6 = Task(taskName="Wash Biscuit", priority=3, duration=120)
 
     petTeddy.add_task(task1)
     petTeddy.add_task(task2)
@@ -31,7 +31,7 @@ def main():
     schedule = Scheduler.schedule_for_owner(ownerMiles)
     print("Scheduled Tasks for Miles:")
     for task in schedule:
-        print(f"{task.taskName} (Priority: {task.priority}, Duration: {task.duration} hours)")
+        print(f"{task.taskName} (Priority: {task.priority}, Duration: {task.duration} minutes)")
 
 if __name__ == "__main__":    main()
 

@@ -7,20 +7,23 @@ class Task:
     """Represents a pet care task"""
     taskName: str
     priority: int  # 1 for high, 2 for medium, 3 for low
-    duration: float  # Time required to complete the task in hours
+    duration: float  # Time required to complete the task in minutes
     description: str = ""
-    frequency: str = "" # times per week? times per month? etc.
+    frequency: str = "" # daily, weekly, etc. (optional)
     completed: bool = False
 
     def mark_complete(self):
         """Mark this task as completed."""
-        self.completed = True
+        if self.frequency != "daily": 
+            # if task needs to be done daily, it's never really completed
+            self.completed = True
 
 
 @dataclass
 class Pet:
     """Represents a pet in the PawPal system"""
     petName: str
+    species: str = ""
     taskList: list = field(default_factory=list)
 
     def add_task(self, task):
@@ -69,10 +72,8 @@ class Scheduler:
         scheduled = []
         total_time = 0.0
         for task in all_tasks:
-            if total_time + task.duration <= owner.timeConstraint:
+            if total_time + task.duration <= owner.timeConstraint*60:
                 scheduled.append(task)
                 task.mark_complete() # Mark task as completed when scheduled
                 total_time += task.duration
-            else:
-                break
         return scheduled

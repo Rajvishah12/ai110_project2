@@ -1,0 +1,18 @@
+classDiagram
+    class Owner {
+        - string name
+        - float timeConstraint
+        - List~Pet~ petList
+    }
+    class Pet {
+        - string name
+        - List~Task~ lowPriorityTasks
+        - List~Task~ mediumPriorityTasks
+        - List~Task~ highPriorityTasks
+    }
+    class Task {
+        - string name
+        - float duration
+    }
+    Owner "1" o-- "*" Pet : has
+    Pet "1" o-- "*" Task : contains

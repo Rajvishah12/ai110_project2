@@ -54,5 +54,32 @@ def test_owner_time_constraint_overnight():
     owner = Owner(ownerName="Jordan", startAvailability="22:00", endAvailability="02:00")
     assert owner.timeConstraint == 4.0
 
-# no need to check for conflict detection because all pets' tasks are scheduled as a collective, 
+
+
+def test_schedule_for_owner():
+    # Owner has 2 hours = 120 minutes
+    owner = Owner(ownerName="Test", startAvailability="09:00", endAvailability="11:00")
+    pet = Pet(petName="Rex")
+    owner.add_pet(pet)
+
+    task1 = Task(taskName="Feed", priority=1, duration=30, preference=1)   # fits, total=30
+    task2 = Task(taskName="Walk", priority=1, duration=40, preference=2)   # fits, total=70
+    task3 = Task(taskName="Groom", priority=2, duration=20, preference=1)  # fits, total=90
+    task4 = Task(taskName="Bath", priority=2, duration=80, preference=2)   # doesn't fit (90+80=170>120)
+
+    pet.add_task(task1)
+    pet.add_task(task2)
+    pet.add_task(task3)
+    pet.add_task(task4)
+
+    schedule = Scheduler.schedule_for_owner(owner)
+    scheduled_names = [t.taskName for t in schedule]
+
+    assert "Feed" in scheduled_names
+    assert "Walk" in scheduled_names
+    assert "Groom" in scheduled_names
+    assert "Bath" not in scheduled_names, "Bath should not fit within the time constraint"
+    assert all(t.startTime != "" for t in schedule), "All scheduled tasks should have a startTime"
+
+# no need to check for conflict detection because all pets' tasks are scheduled as a collective,
 # so there is no opportunity for conflict.

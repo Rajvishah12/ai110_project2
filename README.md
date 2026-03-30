@@ -43,4 +43,32 @@ pip install -r requirements.txt
 7. Refine UML so it matches what you actually built.
 
 ## Smarter Scheduling
-s
+My scheduling algorith considers both the priorities and durations of tasks when deciding what goes on the schedule. It considers task priority and preference when arranging the tasks in order. The way this algorithm schedules tasks does not allow for conflict, so there is no need for conflict detection. 
+
+## Testing PawPal+
+python -m pytest
+
+I tested the following behaviors
+- marking tasks as complete unless they have daily frequency
+- creating additional pets and adding them to owner
+- each of my sorting methods (priority and duration, priority and preference)
+- calculating owner time constraints based on their availability start and end times
+- calculating a schedule (full workflow owner -> pets -> tasks -> schedule)
+
+Confidence Level: 4 stars
+
+---
+
+## Features
+
+- Add multiple pets for a single owner
+- Add and view pet care tasks for each pet (remove is not in UI)
+- Assign priorities and durations to tasks
+- Specify owner availability window for scheduling
+- Automatically generate a daily schedule based on priorities and time constraints
+- Mark tasks as completed (with special handling for daily tasks)
+- View generated schedule in a user-friendly table
+- Interactive Streamlit UI for all features
+
+## Demo
+<a href="/course_images/ai110/ai110-module2show-pawpal-starter/demo.png" target="_blank"><img src='/course_images/ai110/ai110-module2show-pawpal-starter/demo.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>

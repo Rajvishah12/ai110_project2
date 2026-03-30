@@ -39,11 +39,12 @@ At minimum, your system should:
 
 st.divider()
 
-st.subheader("Quick Demo Inputs (UI only)")
+st.subheader("Update Default Values")
 owner_name = st.text_input("Owner name", value="Jordan")
-owner_time_constraint = st.number_input("Owner time constraint (hours)", value=2.0)
+owner_start_time = st.text_input("Owner start time (HH:MM)", value="09:00")
+owner_end_time = st.text_input("Owner end time (HH:MM)", value="11:00")
 if "owner" not in st.session_state:
-    st.session_state.owner = Owner(ownerName=owner_name, timeConstraint=owner_time_constraint)
+    st.session_state.owner = Owner(ownerName=owner_name, startAvailability=owner_start_time, endAvailability=owner_end_time)
 pet_name = st.text_input("Pet name", value="Mochi")
 species = st.selectbox("Species", ["dog", "cat", "other"])
 # Add new pet
@@ -54,13 +55,15 @@ if st.button("Add pet"):
 st.markdown("### Tasks")
 st.caption("Add a few tasks. In your final version, these should feed into your scheduler.")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     task_title = st.text_input("Task title", value="Morning walk")
 with col2:
     duration = st.number_input("Duration (minutes)", min_value=1, max_value=240, value=20)
 with col3:
     priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
+with col4:
+    preference = st.selectbox("Preference", ["low", "medium", "high"], index=2)
 
 petNames = [pet.petName for pet in st.session_state.owner.petList]
 selected_pet_name = st.selectbox("Select pet", petNames)
@@ -75,7 +78,13 @@ if st.button("Add task"):
         priority_value = 2
     else:        
         priority_value = 3
-    new_task = Task(taskName=task_title, priority=priority_value, duration=duration)
+    if preference == "high":
+        preference_value = 1
+    elif preference == "medium":
+        preference_value = 2
+    else:
+        preference_value = 3
+    new_task = Task(taskName=task_title, priority=priority_value, duration=duration, preference=preference_value)
     # Add task to selected_pet
     selected_pet.add_task(new_task)
 
@@ -97,16 +106,21 @@ if st.button("Generate schedule"):
         st.write("Generated Schedule:")
         schedule_data = [
             {
+                "Start Time": task.startTime,
                 "Task": task.taskName,
                 "Pet": next((pet.petName for pet in st.session_state.owner.petList if task in pet.taskList), "Unknown"),
                 "Priority": task.priority,
                 "Duration (min)": int(task.duration),
+                "Preference": task.preference
             }
             for task in schedule
         ]
         st.table(schedule_data)
     else:
         st.info("No tasks could be scheduled with the current constraints.")
-    st.write("Your schedule has been created to prioritize high priority tasks and get as many tasks done as possible. All pets' tasks are considered in this schedule.")
+    st.write("The items in your schedule are chosen by priority, and then duration to " \
+    "maximize the number of high priority tasks that can be accomplished. Then, they are " \
+    "shown to you in order of priority, then preference. All pet tasks were considered together " \
+    "when building this schedule, there is no room for conflict.")
 
 st.divider()
